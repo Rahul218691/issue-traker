@@ -1,0 +1,35 @@
+.project_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.project_card {
+    max-width: 400px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.avatarList {
+    padding: 1rem;
+}
+
+.project_header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.project_card_header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.icon_margin {
+    margin-left: 10px;
+}

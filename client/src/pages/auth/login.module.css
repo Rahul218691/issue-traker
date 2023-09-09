@@ -1,0 +1,14 @@
+.login_wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: 500px;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.card_header {
+    text-align: center;
+}
