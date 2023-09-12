@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { FETCH_PROJECT_LIST_REQUEST, CREATE_NEW_PROJECT, DELETE_PROJECT_REQUEST } from '../actions/projectActions'
 
 import { fetchProjects, createProject, deleteProject } from '../../services/projectService'
-import { setProjects, addNewProject } from '../reducers/projectSlice'
+import { setProjects, addNewProject, removeProject } from '../reducers/projectSlice'
 
 function* fetchProjectsListRequest(action) {
      try {
@@ -29,6 +29,7 @@ function* createNewProjectRequest (action) {
 function* deleteProjectRequest (action) {
    try {
       const response = yield call(deleteProject, action.payload)
+      yield put(removeProject(action.payload.id))
       toast.success(response.msg)
    } catch (error) {
       toast.error(error?.response?.data?.msg)

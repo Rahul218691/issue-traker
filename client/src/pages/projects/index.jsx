@@ -15,6 +15,8 @@ import { ROLE_LIST, ROW_ACTION_TYPES } from '../../helpers/Constants'
 import styles from './project.module.css'
 import RowActions from '../../components/tableView/RowActions'
 
+import { deleteProjectRequest } from '../../redux/actions/projectActions'
+
 const Projects = () => {
 
   const dispatch = useDispatch()
@@ -49,6 +51,16 @@ const Projects = () => {
      setLoading(false)
   }, [pageNumber, pageSize, api])
 
+  const handleSelectAction = useCallback((id, data) => {
+    if (id === ROW_ACTION_TYPES.DELETE) {
+      const payload = {
+        instance: api,
+        id: data._id
+      }
+      dispatch(deleteProjectRequest(payload))
+    }
+  }, [api])
+
   useEffect(() => {
     if (!items.length) {
       handleFetchProjects({ page: 1 })
@@ -76,7 +88,7 @@ const Projects = () => {
                               <RowActions 
                                 isGridViewAction={false}
                                 actionsConfig={[ROW_ACTION_TYPES.EDIT, ROW_ACTION_TYPES.DELETE]}
-                                onSelect={() => { }}
+                                onSelect={(id) => handleSelectAction(id, data)}
                               />
                             </div>
                           )
