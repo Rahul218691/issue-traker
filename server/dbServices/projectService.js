@@ -105,8 +105,21 @@ const removeProjectById = (id) => {
     })
 }
 
+const fetchProjectById = (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            Project.findById(id)
+            .then((data) => resolve(data))
+            .catch((err) => reject(err))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     newProject,
     projectList,
-    removeProjectById
+    removeProjectById,
+    fetchProjectById
 }

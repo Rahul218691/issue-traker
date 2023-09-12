@@ -1,4 +1,4 @@
-const { newProject, projectList, removeProjectById } = require('../dbServices/projectService')
+const { newProject, projectList, removeProjectById, fetchProjectById } = require('../dbServices/projectService')
 
 const createProject = async(req, res) => {
     try {
@@ -50,8 +50,19 @@ const deleteProject = async(req, res) => {
     }
 }
 
+const getProjectById = async(req, res) => {
+    try {
+        const { id } = req.params
+        const project = await fetchProjectById(id)
+        return res.json(project)
+    } catch (error) {
+        return res.status(500).json({msg:error.message});
+    }
+}
+
 module.exports = {
     createProject,
     getProjects,
-    deleteProject
+    deleteProject,
+    getProjectById
 }
