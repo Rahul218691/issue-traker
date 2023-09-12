@@ -10,6 +10,7 @@ import { fetchProjectListRequest } from '../../redux/actions/projectActions'
 
 import DashboardWrapper from '../../components/wrapper'
 import AvatarGroups from '../../components/avatarGroups'
+import DataLoading from '../../components/DataLoading'
 import { ROLE_LIST, ROW_ACTION_TYPES } from '../../helpers/Constants'
 
 import styles from './project.module.css'
@@ -73,9 +74,7 @@ const Projects = () => {
         <h2 className='page_header'>Projects</h2>
         <Button color='primary' disabled={loading} onClick={handleRedirectToProjectSetup}>Create Project</Button>
       </div>
-      {
-        loading ? <></> : (
-          <div className={styles.project_wrapper}>
+        <div className={styles.project_wrapper}>
               {
                 items.map((data) => (
                   <Card className={styles.project_card} key={data._id}>
@@ -83,7 +82,7 @@ const Projects = () => {
                       <div className={styles.project_card_header}>
                         <CardText>{data.title}</CardText>
                         {
-                          state.user.role === ROLE_LIST.ADMIN && (
+                          state?.user?.role === ROLE_LIST.ADMIN && (
                             <div>
                               <RowActions 
                                 isGridViewAction={false}
@@ -103,8 +102,9 @@ const Projects = () => {
                 ))
               }
           </div>
-        )
-      }
+          {
+            loading && <DataLoading />
+          }
     </DashboardWrapper>
   )
 }

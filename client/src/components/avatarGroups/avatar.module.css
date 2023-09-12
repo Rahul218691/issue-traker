@@ -5,6 +5,7 @@
     padding: 0px;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .avatars__item {
