@@ -1,22 +1,15 @@
-import moment from 'moment'
-import React, { useCallback, useEffect, useState, useContext } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, Card, CardBody, CardSubtitle, CardText } from 'reactstrap'
+import { Button } from 'reactstrap'
 
 import useAxios from '../../hooks/useAxios'
-import { AuthContext } from '../../context/AuthContextProvider'
 import { fetchProjectListRequest } from '../../redux/actions/projectActions'
 
 import DashboardWrapper from '../../components/wrapper'
-import AvatarGroups from '../../components/avatarGroups'
 import DataLoading from '../../components/DataLoading'
-import { ROLE_LIST, ROW_ACTION_TYPES } from '../../helpers/Constants'
-
+import ProjectCard from './ProjectCard'
 import styles from './project.module.css'
-import RowActions from '../../components/tableView/RowActions'
-
-import { deleteProjectRequest } from '../../redux/actions/projectActions'
 
 const Projects = () => {
 
@@ -26,8 +19,6 @@ const Projects = () => {
       pageNumber,
       pageSize } = useSelector(state => state.projects)
   const navigate = useNavigate()
-
-  const {state} = useContext(AuthContext)
 
   const [loading, setLoading] = useState(false)
 
@@ -52,16 +43,6 @@ const Projects = () => {
      setLoading(false)
   }, [pageNumber, pageSize, api])
 
-  const handleSelectAction = useCallback((id, data) => {
-    if (id === ROW_ACTION_TYPES.DELETE) {
-      const payload = {
-        instance: api,
-        id: data._id
-      }
-      dispatch(deleteProjectRequest(payload))
-    }
-  }, [api])
-
   useEffect(() => {
     if (!items.length) {
       handleFetchProjects({ page: 1 })
@@ -77,28 +58,10 @@ const Projects = () => {
         <div className={styles.project_wrapper}>
               {
                 items.map((data) => (
-                  <Card className={styles.project_card} key={data._id}>
-                    <CardBody>
-                      <div className={styles.project_card_header}>
-                        <CardText>{data.title}</CardText>
-                        {
-                          state?.user?.role === ROLE_LIST.ADMIN && (
-                            <div>
-                              <RowActions 
-                                isGridViewAction={false}
-                                actionsConfig={[ROW_ACTION_TYPES.EDIT, ROW_ACTION_TYPES.DELETE]}
-                                onSelect={(id) => handleSelectAction(id, data)}
-                              />
-                            </div>
-                          )
-                        }
-                      </div>
-                      <CardSubtitle>{moment(data.startDate).format('LL')}</CardSubtitle>
-                      <div className={styles.avatarList}>
-                        <AvatarGroups data={data.assignee} totalAssignee={data.totalAssignee} />
-                      </div>
-                    </CardBody>
-                  </Card>
+                  <ProjectCard 
+                    key={data._id}
+                    data={data}
+                  />
                 ))
               }
           </div>
