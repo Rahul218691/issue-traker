@@ -13,13 +13,10 @@ export const createProject = (payload) => {
 export const fetchProjects = (payload) => {
     return new Promise(async(resolve, reject) => {
         try {
-            const { instance, isDetailView, page, limit, genericSearch, projectStatus, category } = payload
+            const { instance, page, limit, genericSearch, projectStatus, category } = payload
             let url = `/api/projects?page=${page}&limit=${limit}`
             if (genericSearch) {
                 url = `${url}&genericSearch=${genericSearch}`
-            }
-            if (isDetailView) {
-                url = `${url}&isDetailView=${isDetailView}`
             }
             if (projectStatus) {
                 url = `${url}&projectStatus=${projectStatus}`

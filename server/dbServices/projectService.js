@@ -12,18 +12,10 @@ const newProject = (payload) => {
     })
 }
 
-const projectList = (page, limit, skip, genericSearch, isDetailView, projectStatus, category, isAdmin, user) => {
+const projectList = (page, limit, skip, genericSearch, projectStatus, category, isAdmin, user) => {
     return new Promise((resolve, reject) => {
         try {
-            const projection = isDetailView ? {
-                "title": 1,
-                "description": 1,
-                "startDate": 1,
-                "projectLead": 1,
-                "assignee": 1,
-                "category": 1,
-                "projectStatus": 1
-            } : {
+            const projection = {
                 "title": 1,
                 "startDate": 1,
                 "totalAssignee": {
@@ -32,7 +24,7 @@ const projectList = (page, limit, skip, genericSearch, isDetailView, projectStat
                 "assignee": {
                     $slice: ["$assignee", 5]
                 }
-            }
+            } 
             const search = genericSearch ? 
             {
                 title: {

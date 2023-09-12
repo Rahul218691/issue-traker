@@ -15,7 +15,8 @@ import { deleteProjectRequest } from '../../redux/actions/projectActions'
 import styles from './project.module.css'
 
 const ProjectCard = ({
-    data
+    data,
+    isDetailView = false
 }) => {
 
     const dispatch = useDispatch()
@@ -34,7 +35,7 @@ const ProjectCard = ({
       }, [api])
 
     return (
-        <Card className={styles.project_card}>
+        <Card className={isDetailView ? styles.project_detailcard : styles.project_card}>
             <CardBody>
                 <div className={styles.project_card_header}>
                     <CardText><Link to={`/project/${data._id}`}>{data.title}</Link></CardText>
