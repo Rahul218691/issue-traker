@@ -40,3 +40,29 @@
 .icon_margin {
     margin-left: 10px;
 }
+
+.project_title {
+    font-weight: bold;
+}
+
+.project_description {
+    margin-top: 10px;
+    text-align: justify;
+    color: gray;
+}
+
+.project_info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+}
+
+.project_badge {
+    display: flex;
+    align-items: center;
+}
+
+.categoryBadge {
+    margin-left: 5px;
+}

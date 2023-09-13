@@ -2,12 +2,12 @@ import React, { useMemo } from 'react'
 import styles from './avatar.module.css'
 
 const AvatarGroups = ({
-  data,
+  data = [],
   totalAssignee
 }) => {
 
   const { isShowMoreAssignee, count } = useMemo(() => {
-    const result = Number(totalAssignee) - Number(data.length)
+    const result = Number(totalAssignee) - Number(data?.length)
     return {
       isShowMoreAssignee: result > 0,
       count: result

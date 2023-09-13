@@ -39,8 +39,13 @@ const Projects = () => {
         genericSearch: searchVal,
         instance: api
      }
-     dispatch(fetchProjectListRequest(payload))
-     setLoading(false)
+     try {
+      dispatch(fetchProjectListRequest(payload, () => {
+        setLoading(false)
+      }))
+     } catch (error) {
+      setLoading(false)
+     }
   }, [pageNumber, pageSize, api])
 
   useEffect(() => {

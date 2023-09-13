@@ -10,3 +10,10 @@ export const ROLE_LIST = {
     ADMIN: 'admin',
     DEVELOPER: 'developer'
 }
+
+export const STATUS_COLOR_CODES = {
+    approved: 'secondary',
+    inprogress: 'primary',
+    validation: 'info',
+    completed: 'success'
+}
