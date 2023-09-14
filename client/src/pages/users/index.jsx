@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback, useEffect } from 'react'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
 import useAxios from '../../hooks/useAxios'
 import DashboardWrapper from '../../components/wrapper'
@@ -13,6 +14,7 @@ import { deleteUser, getUsersList } from '../../services/userServices'
 
 import { debounceFunction } from '../../utils/index'
 import { importUsersData } from '../../services/importService'
+import { resetProjectList } from '../../redux/reducers/projectSlice'
 
 const INITIAL_USERS_LIST = {
   items: [],
@@ -26,6 +28,7 @@ const INITIAL_USERS_LIST = {
 
 const ManageUsers = () => {
 
+  const dispatch = useDispatch()
   const api = useAxios()
 
   const [isShowAddScreen, setIsShowAddScreen] = useState(false)
@@ -90,6 +93,7 @@ const ManageUsers = () => {
       try {
         const response = await deleteUser(api, data._id)
         toast.success(response.msg)
+        dispatch(resetProjectList())
         handleFetchUsersList({ page: 1 })
       } catch (error) {
         toast.error(error?.response?.data?.msg)

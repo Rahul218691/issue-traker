@@ -30,10 +30,11 @@ const projectSlice = createSlice({
         },
         removeProject: (state, { payload }) => {
             state.items = state.items.filter(x => x._id !== payload)
-        }
+        },
+        resetProjectList: () => initialState
     }
 })
 
 const { reducer, actions } = projectSlice
-export const { setProjects, addNewProject, removeProject } = actions
+export const { setProjects, addNewProject, removeProject, resetProjectList } = actions
 export default reducer
