@@ -44,13 +44,7 @@ const ADMIN_MENU_LINKS = [
 ]
 
 const DEVELOPER_MENU_LINKS = [
-    ...COMMON_MENU,
-    {
-        id: randomNumber(),
-        title: 'Users',
-        icon: 'bxs-user-plus',
-        path: '/users'
-    }
+    ...COMMON_MENU
 ]
 
 export const getMenu = (user) => {

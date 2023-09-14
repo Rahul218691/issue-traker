@@ -52,7 +52,7 @@ const Projects = () => {
     if (!items.length) {
       handleFetchProjects({ page: 1 })
     }
-  }, [items])
+  }, [])
 
   return (
     <DashboardWrapper>

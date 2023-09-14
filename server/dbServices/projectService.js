@@ -117,9 +117,80 @@ const fetchProjectById = (id) => {
     })
 }
 
+const fetchUserRelatedProjects = (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            Project.find({
+                $or: [
+                    {"assignee._id": id},
+                    {"projectLead._id": id}
+                ]
+            }).select('_id')
+            .then((data) => resolve(data))
+            .catch((err) => reject(err))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const removeProjectLead = (id, projectList) => {
+    return new Promise((resolve, reject) => {
+        try {
+            Project.updateMany({"_id": { $in: [...projectList] }},
+                [
+                    {
+                        $set: {
+                            "projectLead": {
+                                "$cond": {
+                                    "if": {
+                                        "$eq": [
+                                            "$projectLead._id", id
+                                        ]
+                                    },
+                                    "then": {},
+                                    "else": "$projectLead"
+                                }
+                            }
+                        },
+                        
+                    }
+                ], {
+                multi: true
+            }).then(() => resolve(true))
+            .catch((err) => reject(err))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const removeAssigneeFromProject = (id, projectList) => {
+    return new Promise((resolve, reject) => {
+        try {
+            Project.updateMany({"_id": { $in: [...projectList] }},
+            {
+                $pull: {
+                    "assignee": {
+                        "_id": id
+                    }
+                },
+            }, {
+            multi: true
+        }).then(() => resolve(true))
+        .catch((err) => reject(err))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     newProject,
     projectList,
     removeProjectById,
-    fetchProjectById
+    fetchProjectById,
+    removeProjectLead,
+    fetchUserRelatedProjects,
+    removeAssigneeFromProject
 }

@@ -5,6 +5,7 @@ const path = require('path')
 const { hashPassword } = require('../helpers/bcrypt.helper')
 const { addNewUser, getUsers, removeUserById, findUserById, updateUser } = require('../dbServices/user')
 const { checkUserExists } = require('../dbServices/auth')
+const { fetchUserRelatedProjects, removeProjectLead, removeAssigneeFromProject } = require('../dbServices/projectService')
 
 const createUser = async(req, res) => {
     try {
@@ -56,6 +57,11 @@ const deleteUser = async(req, res) => {
     try {
         const { id } = req.params
         if (!id) return res.status(400).json({msg: 'Failed to delete user'})
+        const userProjects = await fetchUserRelatedProjects(id)
+        if (userProjects.length) {
+            await removeProjectLead(id, userProjects)
+            await removeAssigneeFromProject(id, userProjects)
+        }
         await removeUserById(id)
         res.json({
             msg: 'User Deleted Sucessfully'
