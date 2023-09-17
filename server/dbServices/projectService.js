@@ -33,8 +33,9 @@ const projectList = (page, limit, skip, genericSearch, projectStatus, category, 
                 }
             } : {}
             const projectListCondition = isAdmin ? {} : {
-                "assignee._id": user
+                "assignee._id": String(user)
             }
+            console.log(projectListCondition)
             const categoryCondition = category ? {
                 "category.value": category
             } : {}
