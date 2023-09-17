@@ -55,3 +55,39 @@ export const getProjectById = (payload) => {
         }
     })
 }
+
+export const createProjectNote = (payload) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const { instance } = payload
+            const { data } = await instance.post(`/api/note/create`, payload)
+            resolve(data)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const getProjectNotes = (payload) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const { instance, projectId, page, limit } = payload
+            const { data } = await instance.get(`/api/project/notes/${projectId}?page=${page}&limit=${limit}`)
+            resolve(data)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+export const deleteProjectNote = (payload) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const { instance, id } = payload
+            const { data } = await instance.delete(`/api/note/${id}`)
+            resolve(data)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}

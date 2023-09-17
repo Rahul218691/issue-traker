@@ -1,3 +1,4 @@
+const { bulkDeleteNotes } = require('../dbServices/noteService');
 const { newProject, projectList, removeProjectById, fetchProjectById } = require('../dbServices/projectService')
 
 const createProject = async(req, res) => {
@@ -42,6 +43,7 @@ const deleteProject = async(req, res) => {
         const {id} = req.params
         if (!id) return res.status(400).json({msg: 'Failed to delete project'})
         await removeProjectById(id)
+        await bulkDeleteNotes(id)
         res.json({
             msg: 'Project deleted successfully'
         })

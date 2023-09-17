@@ -27,6 +27,16 @@
   content: '';
 }
 
+.blockquote > svg {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  aspect-ratio: 1/1;
+  height: 100% !important;
+  cursor: pointer;
+  color: crimson;
+}
+
 .footer_span{
   display:block;
   color:#333333;

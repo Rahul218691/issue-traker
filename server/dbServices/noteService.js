@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Note = require('../models/note')
 
 const newNote = (payload) => {
@@ -15,8 +16,9 @@ const newNote = (payload) => {
 const getNotes = (page, limit, skip, projectId) => {
     return new Promise((resolve, reject) => {
         try {
+            const objectIdConvert = new mongoose.Types.ObjectId(projectId)
             Note.aggregate([
-                { $match: { projectId } },
+                { $match: { projectId: objectIdConvert } },
                 { $sort: { createdAt: -1 } },
                 {
                     $facet: {
@@ -71,8 +73,18 @@ const removeNote = (id) => {
     })
 }
 
+const bulkDeleteNotes = (id) => {
+    return new Promise((resolve, reject) => {
+        Note.deleteMany({
+            projectId: new mongoose.Types.ObjectId(id)
+        }).then(() => resolve(true))
+        .catch((err) => reject(err))
+    })
+}
+
 module.exports = {
     newNote,
     getNotes,
-    removeNote
+    removeNote,
+    bulkDeleteNotes
 } 

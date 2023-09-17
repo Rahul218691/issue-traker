@@ -8,12 +8,9 @@ import DashboardWrapper from '../../components/wrapper'
 import BreadCrumbItem from '../../components/BreadCrumb'
 import InputField from '../../components/InputField'
 import ReactSelect from '../../components/reactSelect/ReactSelect'
-import ReactAsyncSelect from '../../components/reactSelect/ReactAsyncSelect'
+import AssigneeSelect from '../../components/reactSelect/AssigneeSelect'
 
 import { breadCrumConfig, PROJECT_CATEGORY_OPTIONS } from './config'
-import { PAGE_SIZE_LIMIT } from '../../helpers/Constants'
-
-import { getUsersList } from '../../services/userServices'
 import { validateProjectDetails } from './helper'
 import { createNewProjectRequest } from '../../redux/actions/projectActions'
 
@@ -26,7 +23,6 @@ const INITIAL_PROJECT_LIST = {
   projectLead: null
 }
 
-
 const CreateProject = () => {
 
   const dispatch = useDispatch()
@@ -35,27 +31,6 @@ const CreateProject = () => {
   const [projectDetails, setProjectDetails] = useState(Object.assign({}, INITIAL_PROJECT_LIST))
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
-
-  const handleLoadMore = useCallback(async(searchQuery, loadedOptions, { page }) => {
-    try {
-      const payload = {
-        page,
-        limit: PAGE_SIZE_LIMIT,
-        genericSearch: searchQuery,
-        isDDL: true
-      }
-        const response = await getUsersList(api, payload)
-        return {
-          options: response.data,
-          hasMore: response.hasNextPage,
-          additional: {
-            page: searchQuery ? 2 : page + 1
-          }
-        }
-    } catch (error) {
-      console.log(error)
-    }
-  }, [api])
 
   const handleChangeProjectDetails = useCallback((e, id, selected) => {
     const updatedProjectInfo = Object.assign({}, projectDetails)
@@ -148,7 +123,7 @@ const CreateProject = () => {
                     />
                   </Col>
                   <Col md={6}>
-                      <ReactAsyncSelect 
+                      <AssigneeSelect 
                         id="assignee"
                         name="assignee"
                         value={projectDetails.assignee}
@@ -158,10 +133,7 @@ const CreateProject = () => {
                         isRequired
                         errors={errors}
                         placeholder='Assign To'
-                        getOptionLabel={e => e.username}
-                        getOptionValue={e => e._id}
                         onSelect={handleChangeProjectDetails}
-                        onLoadOptions={handleLoadMore}
                       />
                   </Col>
                   <Col md={6}>

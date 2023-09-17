@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React, { useCallback, useContext } from 'react'
 import { Badge, Card, CardBody, CardSubtitle, CardText } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import useAxios from '../../hooks/useAxios'
@@ -22,6 +22,7 @@ const ProjectCard = ({
 }) => {
     const dispatch = useDispatch()
     const api = useAxios()
+    const navigate = useNavigate()
 
     const {state} = useContext(AuthContext)
 
@@ -31,9 +32,13 @@ const ProjectCard = ({
             instance: api,
             id: data._id
           }
-          dispatch(deleteProjectRequest(payload))
+          dispatch(deleteProjectRequest(payload, () => {
+            if (isDetailView) {
+                navigate('/projects')
+              }
+          }))
         }
-      }, [api])
+      }, [api, isDetailView])
 
     return (
         <Card className={isDetailView ? styles.project_detailcard : styles.project_card}>

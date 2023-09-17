@@ -73,6 +73,14 @@ a {
 	color: var(--dark);
 }
 
+.disable_icon {
+	pointer-events: none;
+}
+
+.disable_icon > svg {
+	color: #ccc;
+}
+
 #content {
 	position: relative;
 	width: calc(100% - 280px);
