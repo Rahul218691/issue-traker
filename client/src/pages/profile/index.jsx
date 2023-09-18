@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState, useContext } from 're
 import { Row, Col } from 'reactstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { AuthContext } from '../../context/AuthContextProvider'
 import useAxios from '../../hooks/useAxios'
@@ -11,20 +12,10 @@ import ProfileDetails from './ProfileDetails'
 import { getColumnConfig } from './TableConfig'
 import DashboardWrapper from '../../components/wrapper'
 import TableView from '../../components/tableView'
-import { PAGE_SIZE_LIMIT } from '../../helpers/Constants'
-import { MOCKDATA } from './mockData'
+import { ROLE_LIST } from '../../helpers/Constants'
 
 import { getUserProfile, updateUserProfile } from '../../services/userServices'
-
-const INITIAL_PROJECT_LIST = {
-  items: MOCKDATA,
-  totalPages: 0,
-  totalCount: 0,
-  hasNextPage: false,
-  hasPreviousPage: false,
-  pageNumber: 1,
-  pageSize: PAGE_SIZE_LIMIT
-}
+import { fetchProjectListRequest } from '../../redux/actions/projectActions'
 
 const INITIAL_USER_STATE = {
 	phone: "",
@@ -51,15 +42,15 @@ const Profile = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { state } = useContext(AuthContext)
+  const { items, pageNumber, pageSize, totalCount } = useSelector(state => state.projects)
+  const dispatch = useDispatch()
 
-  const [userProjectList] = useState(Object.assign({}, INITIAL_PROJECT_LIST))
   const [userDetails, setUserDetails] = useState(Object.assign({}, INITIAL_USER_STATE))
   const [loadingProfile, setLoadingProfile] = useState(false)
   const [isEditMode, setEditMode] = useState(false)
   const [updatedImage, setUpdateImage] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
-
-  const { items, pageSize, pageNumber, totalCount } = useMemo(() => userProjectList, [userProjectList])
+  const [genericSearch, setGenericSearch] = useState('')
 
   const columns = useMemo(() => {
     return getColumnConfig()
@@ -155,6 +146,21 @@ const Profile = () => {
     }
   }, [id, navigate])
 
+  useEffect(() => {
+    if (state && state.user && state.user.role === ROLE_LIST.DEVELOPER && !items.length) {
+      const payload = {
+        page: pageNumber || 1,
+        limit: pageSize || 10,
+        instance: api
+      }
+      dispatch(fetchProjectListRequest(payload))
+    }
+  }, [])
+
+  const handleChangeGenericSearch = useCallback((e) => {
+    setGenericSearch(e.target.value)
+  }, [])
+
   return (
     <DashboardWrapper>
         <Row className='gutters-sm'>
@@ -175,14 +181,15 @@ const Profile = () => {
                 data={items}
                 isGenericSearchRequired
                 isPaginationRequired
-                isServerSideGenericSearch
                 currentPage={pageNumber}
                 totalCount={totalCount}
                 pageSize={pageSize}
+                genericSearch={genericSearch}
                 customStyle={{
                   'height': '350px',
                   'overflowY': 'scroll'
                 }}
+                onChangeGenericSearch={handleChangeGenericSearch}
               />
               }
           </Col>

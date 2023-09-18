@@ -22,6 +22,7 @@
 	--light-yellow: #FFF2C6;
 	--orange: #FD7238;
 	--light-orange: #FFE0D3;
+	--green: #198754;
 }
 
 li {
@@ -387,7 +388,7 @@ a {
 	font-weight: 700;
 }
 #content main .table-data .order table tr td .status.completed {
-	background: var(--blue);
+	background: var(--green);
 }
 #content main .table-data .order table tr td .status.process {
 	background: var(--yellow);
@@ -395,7 +396,9 @@ a {
 #content main .table-data .order table tr td .status.pending {
 	background: var(--orange);
 }
-
+#content main .table-data .order table tr td .status.validation {
+	background: var(--blue);
+}
 
 #content main .table-data .todo {
 	flex-grow: 1;

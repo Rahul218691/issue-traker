@@ -1,17 +1,23 @@
+import moment from 'moment'
+import { STATUS_COLOR_CODES } from './config'
+
 export const getColumnConfig = () => [
     {
-        key: 'projectName',
+        key: 'title',
         title: 'Project'
     },
     {
-        key: "startedDate",
-        title: "Start Date"
+        key: "startDate",
+        title: "Start Date",
+        render: (_, { startDate }) => (
+            <span>{moment(startDate).format('LL')}</span>
+        )
     },
     {
-        key: "status",
+        key: "projectStatus",
         title: "Project Status",
-        render: (_, { status }) => (
-            <span className="status process">{status}</span>
+        render: (_, { projectStatus }) => (
+            <span className={`status ${STATUS_COLOR_CODES[projectStatus]}`}>{projectStatus}</span>
         )
     }
 ]

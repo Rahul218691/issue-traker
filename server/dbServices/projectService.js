@@ -23,7 +23,8 @@ const projectList = (page, limit, skip, genericSearch, projectStatus, category, 
                 },
                 "assignee": {
                     $slice: ["$assignee", 5]
-                }
+                },
+                "projectStatus": 1
             } 
             const search = genericSearch ? 
             {

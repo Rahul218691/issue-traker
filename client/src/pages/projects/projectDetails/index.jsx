@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, useEffect, useState, useMemo, useContext } from 'react'
 import { Row, Col, Button } from 'reactstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr'
 import Skeleton from 'react-loading-skeleton'
 
+import { AuthContext } from '../../../context/AuthContextProvider'
 import useAxios from '../../../hooks/useAxios'
 import { getProjectDetailsRequest, getProjectNotesRequest, deleteProjectNoteRequest } from '../../../redux/actions/projectActions'
 import DashboardWrapper from '../../../components/wrapper'
@@ -12,6 +13,7 @@ import ProjectCard from '../ProjectCard'
 import ProjectNoteCreateForm from './ProjectNoteCreateForm'
 import NoteItem from '../../../components/noteItem'
 import styles from './details.module.css'
+import { ROLE_LIST } from '../../../helpers/Constants'
 
 const initialState = {
   items: [],
@@ -27,6 +29,7 @@ const ProjectDetails = () => {
 
   const dispatch = useDispatch()
   const api = useAxios()
+  const { state: { user } } = useContext(AuthContext)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -135,11 +138,13 @@ const ProjectDetails = () => {
                 />
             </Col>
             <Col md={5}>
-                <ProjectNoteCreateForm 
+                {
+                  !!user?.role && user.role === ROLE_LIST.ADMIN && <ProjectNoteCreateForm 
                   projectId={id}
                   options={projectDetail.assignee}
                   onFetchNotes={handleFetchProjectNotesList}
                 />
+                }
             </Col>
         </Row>
         <div className={styles.note_wrapper}>
