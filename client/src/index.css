@@ -53,7 +53,8 @@ a {
   text-decoration: none;
 }
 
-.font_icons {
+.font_icons,
+.row_clickable {
   cursor: pointer;
 }
 

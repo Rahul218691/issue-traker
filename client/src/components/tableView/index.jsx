@@ -14,12 +14,14 @@ const TableView = ({
     currentPage,
     totalCount,
     pageSize,
+    disableRowClick = true,
     isShowAddForm = false,
     isPaginationRequired = false,
     isServerSideGenericSearch = false,
     onChangeGenericSearch = () => { },
     onToggleAddScreen = () => { },
-    onPageChange = () => { }
+    onPageChange = () => { },
+    onRowClick = () => { }
 }) => {
 
     const handleGenericSearch = useCallback((event) => {
@@ -60,6 +62,8 @@ const TableView = ({
                     <TableRow 
                     data={filteredRows}
                     columns={columns} 
+                    disableRowClick={disableRowClick}
+                    onRowClick={onRowClick}
                     />
                 </tbody>
             </table>

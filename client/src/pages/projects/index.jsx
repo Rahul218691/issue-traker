@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'reactstrap'
 
+import { AuthContext } from '../../context/AuthContextProvider'
 import useAxios from '../../hooks/useAxios'
 import { fetchProjectListRequest } from '../../redux/actions/projectActions'
 
@@ -10,11 +11,13 @@ import DashboardWrapper from '../../components/wrapper'
 import DataLoading from '../../components/DataLoading'
 import ProjectCard from './ProjectCard'
 import styles from './project.module.css'
+import { ROLE_LIST } from '../../helpers/Constants'
 
 const Projects = () => {
 
   const dispatch = useDispatch()
   const api = useAxios()
+  const { state } = useContext(AuthContext)
   const { items,
       pageNumber,
       pageSize } = useSelector(state => state.projects)
@@ -58,7 +61,9 @@ const Projects = () => {
     <DashboardWrapper>
       <div className={styles.project_header}>
         <h2 className='page_header'>Projects</h2>
-        <Button color='primary' disabled={loading} onClick={handleRedirectToProjectSetup}>Create Project</Button>
+        {
+          state && state.user && state.user.role === ROLE_LIST.ADMIN && <Button color='primary' disabled={loading} onClick={handleRedirectToProjectSetup}>Create Project</Button>
+        }
       </div>
         <div className={styles.project_wrapper}>
               {

@@ -161,6 +161,12 @@ const Profile = () => {
     setGenericSearch(e.target.value)
   }, [])
 
+  const handleRowClick = useCallback((data) => {
+    if (data) {
+      navigate(`/project/${data._id}`)
+    }
+  }, [])
+
   return (
     <DashboardWrapper>
         <Row className='gutters-sm'>
@@ -184,12 +190,14 @@ const Profile = () => {
                 currentPage={pageNumber}
                 totalCount={totalCount}
                 pageSize={pageSize}
+                disableRowClick={false}
                 genericSearch={genericSearch}
                 customStyle={{
                   'height': '350px',
                   'overflowY': 'scroll'
                 }}
                 onChangeGenericSearch={handleChangeGenericSearch}
+                onRowClick={handleRowClick}
               />
               }
           </Col>
