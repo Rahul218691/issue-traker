@@ -12,6 +12,12 @@ const COMMON_MENU = [
         title: 'Projects',
         icon: 'bx-list-ul',
         path: '/projects'
+    },
+    {
+        id: randomNumber(),
+        title: 'Kanban Board',
+        icon: 'bx-task',
+        path: '/kanban/board'
     }
 ]
 

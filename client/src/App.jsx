@@ -7,6 +7,7 @@ import Login from './pages/auth/Login'
 import ManageUsers from './pages/users'
 import UserProfile from './pages/profile'
 import Projects from './pages/projects'
+import KanbanBoard from './pages/kanban-board'
 import ProjectDetails from './pages/projects/projectDetails'
 import CreateProject from './pages/projects/CreateProject'
 import { decryptData } from './utils'
@@ -42,6 +43,7 @@ const App = () => {
       <Route path='/projects' element={<PrivateRoute><Projects /></PrivateRoute>} />
       <Route path='/project/create' element={<AdminPrivateRoute><CreateProject /></AdminPrivateRoute>} />
       <Route path='/project/:id' element={<PrivateRoute><ProjectDetails /></PrivateRoute>} />
+      <Route path='/kanban/board' element={<PrivateRoute><KanbanBoard /></PrivateRoute>} />
     </Routes>
   )
 }
