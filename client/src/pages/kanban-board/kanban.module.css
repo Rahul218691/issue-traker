@@ -1,0 +1,120 @@
+:root {
+    --bg:#ebf0f7;
+    --header:#fbf4f6;
+    --text:#2e2e2f;
+    --white:#ffffff;
+    --light-grey:#c4cad3;
+    --tag-1:#ceecfd;
+    --tag-1-text:#2e87ba;
+    --tag-2:#d6ede2;
+    --tag-2-text:#13854e;
+    --tag-3:#ceecfd;
+    --tag-3-text:#2d86ba;
+    --tag-4:#f2dcf5;
+    --tag-4-text:#a734ba;
+    --purple:#7784ee;
+    --dark: #342E37;
+  }
+
+
+.kanban_board {
+    width: 100%;
+    display: inline-block;
+}
+
+.kanban_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    grid-column-gap: 1.5rem;
+}
+
+.kanban_column_heading {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kanban_column_heading_title {
+    font-size: 20px;
+    color: var(--dark);
+}
+
+.kanban_task {
+    cursor: move;
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+    margin-bottom: 1rem;
+    border: 3px dashed transparent;
+}
+
+.kanban_task:hover {
+    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
+    border-color: rgba(162, 179, 207, 0.2) !important;
+}
+
+.kanban_task p {
+    font-size: 15px;
+    margin: 1.2rem 0;
+}
+
+.task_tag {
+    border-radius: 100px;
+    padding: 2px 13px;
+    font-size: 12px;
+    color: var(--tag-2-text);
+    background-color: var(--tag-2);
+    margin-bottom: 5px;
+}
+
+.kanban_task_tags {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.task_stats {
+    position: relative;
+    width: 100%;
+    color: var(--light-grey);
+    font-size: 12px;
+}
+
+.task_stats span:not(:last-of-type) {
+    margin-right: 1rem;
+}
+
+.task_stats svg {
+    margin-right: 5px;
+}   
+
+.task-hover {
+    border: 3px dashed var(--light-grey) !important;
+}
+
+@media only screen and (max-width: 1300px) {
+    .kanban_board {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .kanban_wrapper {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .kanban_wrapper {
+        grid-template-columns: 1fr;
+    }
+    h1 {
+        font-size: 25px;
+    }
+}
