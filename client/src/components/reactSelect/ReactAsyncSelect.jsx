@@ -14,6 +14,7 @@ const ReactAsyncSelect = ({
     isRequired,
     errors = {},
     isSearchable = true,
+    isDisabled = false,
     onSelect = () => { },
     onLoadOptions = () => { },
     ...props
@@ -39,8 +40,9 @@ const ReactAsyncSelect = ({
         isMulti={isMulti}
         debounceTimeout={300}
         isSearchable={isSearchable}
+        isDisabled={isDisabled}
         menuPortalTarget={document.body} 
-        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+        styles={{ menuPortal: base => ({ ...base, zIndex: 99999999 }) }}
         onChange={(selected) => onSelect(null, id, selected)}
         loadOptions={onLoadOptions}
         {...props}
@@ -62,6 +64,7 @@ ReactAsyncSelect.propTypes = {
     onLoadOptions: PropTypes.func,
     placeholder: PropTypes.string,
     isSearchable: PropTypes.bool,
+    isDisabled: PropTypes.bool,
     id: PropTypes.string,
     name: PropTypes.string
 }

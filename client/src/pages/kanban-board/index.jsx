@@ -1,16 +1,59 @@
-import React from 'react'
-import { FaFlag, FaComment } from 'react-icons/fa6'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import DashboardWrapper from '../../components/wrapper'
-import RowActions from '../../components/tableView/RowActions'
-import { ROW_ACTION_TYPES } from '../../helpers/Constants'
-import styles from './kanban.module.css'
 import { BOARD_DATA } from './mockData'
+import KanbanTasks from './KanbanTasks'
+import KanbanModal from './KanbanModal'
+import KanbanHeader from './KanbanHeader'
+
+import styles from './kanban.module.css'
 
 const KanbanBoard = () => {
+
+  const location = useLocation()
+
+  const [isOpenTaskModal, setIsOpenTaskModal] = useState(false)
+  const [isNewTask, setIsNewTask] = useState(true)
+  const [selectedTask, setSelectedTask] = useState(null)
+  const [project, setProject] = useState(null)
+
+  const handleSelectTask = useCallback((task) => {
+    setIsOpenTaskModal(true)
+    setIsNewTask(false)
+    setSelectedTask(task)
+  }, [])
+
+  const handleCloseTaskModal = useCallback(() => {
+    setSelectedTask(null)
+    setIsOpenTaskModal(false)
+    setIsNewTask(true)
+  }, [])
+
+  const handleToggleNewTask = useCallback(() => {
+    setIsNewTask(true)
+    setIsOpenTaskModal(true)
+  }, [])
+
+  const handleSelectProject = useCallback((e, id, selected) => {
+    setProject(selected)
+  }, [])
+
+  useEffect(() => {
+    if (location?.state) {
+      setProject(location.state.project)
+    }
+  }, [])
+
   return (
     <DashboardWrapper>
       <main className={styles.kanban_board}>
+        <KanbanHeader 
+          project={project}
+          isDisableSelect={location?.state?.isDisableSelect}
+          onSetProject={handleSelectProject}
+          onToggleTaskModal={handleToggleNewTask}
+        />
         <div className={styles.kanban_wrapper}>
           {
             BOARD_DATA.map((column) => (
@@ -20,30 +63,24 @@ const KanbanBoard = () => {
                 </div>
                 {
                   column.tasks.map((task) => (
-                    <div className={styles.kanban_task} draggable key={task.id}>
-                      <div className={styles.kanban_task_tags}>
-                        {
-                          task.tags.map((tag, index) => (
-                            <span key={index} className={styles.task_tag}>{tag}</span>
-                          ))
-                        }
-                        <RowActions
-                          actionsConfig={[ROW_ACTION_TYPES.EDIT, ROW_ACTION_TYPES.DELETE]}
-                          onSelect={() => { }}
-                        />
-                      </div>
-                      <p>{task.title}</p>
-                      <div className={styles.task_stats}>
-                        <span><FaFlag />{task.created_at}</span>
-                        <span><FaComment />{task.comments}</span>
-                      </div>
-                    </div>
+                      <KanbanTasks
+                        key={task.id}
+                        task={task}
+                        onSetSelectedTask={handleSelectTask}
+                      />
                   ))
                 }
               </div>
             ))
           }
-
+          {
+          <KanbanModal 
+            isOpen={isOpenTaskModal}
+            isNewTask={isNewTask}
+            selectedTask={selectedTask}
+            onToggle={handleCloseTaskModal}
+          />
+          }
         </div>
       </main>
     </DashboardWrapper>

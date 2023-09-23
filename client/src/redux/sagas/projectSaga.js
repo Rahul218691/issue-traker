@@ -11,8 +11,12 @@ import { setProjects, addNewProject, removeProject } from '../reducers/projectSl
 function* fetchProjectsListRequest(action) {
      try {
         const response = yield call(fetchProjects, action.payload)
-        yield put(setProjects(response))
-        action.callback(true)
+        if (action.payload?.isDDL) {
+         action.callback(response)
+        } else {
+         yield put(setProjects(response))
+         action.callback(true)
+        }
      } catch (error) {
          action.callback()
         toast.error(error?.response?.data?.msg)

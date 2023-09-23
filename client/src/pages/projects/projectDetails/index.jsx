@@ -124,6 +124,18 @@ const ProjectDetails = () => {
     }
   }, [hasNextPage, hasPreviousPage, pageNumber, handleFetchProjectNotesList])
 
+  const handleRedirectToKanban = useCallback(() => {
+    navigate('/kanban/board', {
+      state: {
+        project: {
+          _id: projectDetail._id,
+          title: projectDetail.title
+        },
+        isDisableSelect: true
+      }
+    })
+  }, [projectDetail])
+
   return (
     <DashboardWrapper>
         <div className='mb-2'>
@@ -145,6 +157,13 @@ const ProjectDetails = () => {
                   onFetchNotes={handleFetchProjectNotesList}
                 />
                 }
+              <div className='table__add__data mt-2'>
+                <div className='add__link__fields row'>
+                    <Col>
+                      <Button onClick={handleRedirectToKanban} color='primary'>Kanban Board</Button>
+                    </Col>
+                </div>
+              </div>
             </Col>
         </Row>
         <div className={styles.note_wrapper}>

@@ -13,7 +13,7 @@ export const createProject = (payload) => {
 export const fetchProjects = (payload) => {
     return new Promise(async(resolve, reject) => {
         try {
-            const { instance, page, limit, genericSearch, projectStatus, category } = payload
+            const { instance, page, limit, genericSearch, projectStatus, category, isDDL } = payload
             let url = `/api/projects?page=${page}&limit=${limit}`
             if (genericSearch) {
                 url = `${url}&genericSearch=${genericSearch}`
@@ -23,6 +23,9 @@ export const fetchProjects = (payload) => {
             }
             if (category) {
                 url = `${url}&category=${category}`
+            }
+            if (isDDL) {
+                url = `${url}&isDDL=${isDDL}`
             }
             const { data } = await instance.get(url, payload)
             resolve(data)

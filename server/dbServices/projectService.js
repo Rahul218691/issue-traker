@@ -12,10 +12,13 @@ const newProject = (payload) => {
     })
 }
 
-const projectList = (page, limit, skip, genericSearch, projectStatus, category, isAdmin, user) => {
+const projectList = (page, limit, skip, genericSearch, projectStatus, category, isAdmin, user, isDDL) => {
     return new Promise((resolve, reject) => {
         try {
-            const projection = {
+            const projection = isDDL ? {
+                "title": 1,
+                "_id": 1
+            } : {
                 "title": 1,
                 "startDate": 1,
                 "totalAssignee": {

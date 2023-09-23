@@ -38,7 +38,7 @@ const DashboardSideMenu = ({
                     <li className={`${location.pathname === menu.path ? 'active' : ''}`} key={menu.id}
                         onClick={() => handleMenuAction(menu)}
                     >
-                        <Link to={`${menu.path}`}>
+                        <Link to={`${menu.path}`} style={{ pointerEvents: location.pathname === menu.path ? 'none' : '' }}>
                             <i className={`bx ${menu.icon}`}></i>
                             <span className="text">{menu.title}</span>
                         </Link>

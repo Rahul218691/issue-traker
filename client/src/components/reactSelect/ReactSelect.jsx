@@ -40,7 +40,7 @@ const ReactSelect = ({
         id={id}
         menuPlacement='auto'
         menuPortalTarget={document.body} 
-        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+        styles={{ menuPortal: base => ({ ...base, zIndex: 99999999 }) }}
         name={name}
         value={value}
         placeholder={placeholder}

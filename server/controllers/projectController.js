@@ -18,11 +18,11 @@ const getProjects = async(req, res) => {
         const userRole = req.user.role
         const user = req.user._id
         const isAdmin = userRole === 'admin'
-        let { page, limit, genericSearch, projectStatus, category } = req.query
+        let { page, limit, genericSearch, projectStatus, category, isDDL } = req.query
         limit = limit ? Number(limit) : 10
         page = page ? Number(page) : 1
         const skip = (page - 1) * limit
-        const projects = await projectList(page, limit, skip, genericSearch, projectStatus, category, isAdmin, user)
+        const projects = await projectList(page, limit, skip, genericSearch, projectStatus, category, isAdmin, user, isDDL)
         const projectData = {
             data: projects.length ? projects[0].data : [],
             totalPages: projects.length ? projects[0].totalPages : 0,
