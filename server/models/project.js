@@ -14,12 +14,16 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
     projectLead: {
-        type: Object,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
-    assignee: {
-        type: Array
-    },
+    assignee: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     category: {
         type: Array
     },

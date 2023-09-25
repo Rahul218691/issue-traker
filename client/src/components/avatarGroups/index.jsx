@@ -18,7 +18,7 @@ const AvatarGroups = ({
     <div className={styles.avatars}>
         {
           data.map((user) => (
-            <img key={user._id} className={styles.avatars__item} src={user.profile} title={user.username} alt="" />
+            <img key={user._id} className={styles.avatars__item} src={user.profile} title={user.username} crossOrigin='Anonymous' alt="" />
           ))
         }
         {

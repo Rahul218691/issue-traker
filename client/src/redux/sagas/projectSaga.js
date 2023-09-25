@@ -6,7 +6,7 @@ import { FETCH_PROJECT_LIST_REQUEST, CREATE_NEW_PROJECT, DELETE_PROJECT_REQUEST,
  } from '../actions/projectActions'
 
 import { fetchProjects, createProject, deleteProject, getProjectById, createProjectNote, getProjectNotes, deleteProjectNote } from '../../services/projectService'
-import { setProjects, addNewProject, removeProject } from '../reducers/projectSlice'
+import { setProjects, resetProjectList, removeProject } from '../reducers/projectSlice'
 
 function* fetchProjectsListRequest(action) {
      try {
@@ -27,7 +27,7 @@ function* createNewProjectRequest (action) {
    try {
       const response = yield call(createProject, action.payload)
       toast.success(response.msg)
-      yield put(addNewProject(response.project))
+      yield put(resetProjectList())
       action.callback(true)
    } catch (error) {
       action.callback()

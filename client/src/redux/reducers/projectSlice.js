@@ -25,9 +25,6 @@ const projectSlice = createSlice({
             state.pageNumber = payload.pageNumber,
             state.pageSize = payload.pageSize
         },
-        addNewProject: (state, { payload }) => {
-            state.items = [payload, ...state.items]
-        },
         removeProject: (state, { payload }) => {
             state.items = state.items.filter(x => x._id !== payload)
         },
@@ -36,5 +33,5 @@ const projectSlice = createSlice({
 })
 
 const { reducer, actions } = projectSlice
-export const { setProjects, addNewProject, removeProject, resetProjectList } = actions
+export const { setProjects, removeProject, resetProjectList } = actions
 export default reducer

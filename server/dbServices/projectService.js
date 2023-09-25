@@ -55,6 +55,23 @@ const projectList = (page, limit, skip, genericSearch, projectStatus, category, 
                         createdAt: -1
                     }
                 },
+                {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'assignee',
+                        foreignField: '_id',
+                        pipeline: [
+                            {
+                                $project: {
+                                    "_id": 1,
+                                    "username": 1,
+                                    "profile": 1
+                                }
+                            }
+                        ],
+                        as: 'assignee'
+                    }
+                },
                 { $project: projection },
                 {
                     $facet: {
@@ -113,6 +130,8 @@ const fetchProjectById = (id) => {
     return new Promise((resolve, reject) => {
         try {
             Project.findById(id)
+            .populate('assignee', '_id username profile')
+            .populate('projectLead', '_id username profile')
             .then((data) => resolve(data))
             .catch((err) => reject(err))
         } catch (error) {

@@ -60,6 +60,8 @@ const CreateProject = () => {
       setErrors({})
       const payload = {
         ...projectDetails,
+        assignee: projectDetails.assignee.map((x) => { return { _id: x._id } }),
+        projectLead: { _id: projectDetails.projectLead._id },
         instance: api
       }
       dispatch(createNewProjectRequest(payload, (res) => {
