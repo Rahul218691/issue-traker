@@ -21,6 +21,22 @@ const getNotes = (page, limit, skip, projectId) => {
                 { $match: { projectId: objectIdConvert } },
                 { $sort: { createdAt: -1 } },
                 {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'mentions',
+                        foreignField: '_id',
+                        pipeline: [
+                            {
+                                $project: {
+                                    "username": 1,
+                                    "_id": 1
+                                }
+                            }
+                        ],
+                        as: 'mentions'
+                    }
+                },
+                {
                     $facet: {
                         metadata: [{ $count: 'totalCount' }],
                         data: [

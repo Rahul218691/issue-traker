@@ -10,9 +10,12 @@ const noteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    mentions: {
-        type: Array
-    }
+    mentions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 },{
 	timestamps:true
 })

@@ -47,7 +47,8 @@ const ProjectNoteCreateForm = ({
       const payload = {
         instance: api,
         projectId,
-        ...noteInfo,
+        note: noteInfo.note,
+        mentions: noteInfo.mentions.length ? noteInfo.mentions.map((x) => { return { _id: x._id } }) : []
       }
       dispatch(createNewProjectNoteRequest(payload, () => {
         setLoading(false)
