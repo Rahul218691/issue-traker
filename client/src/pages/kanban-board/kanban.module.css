@@ -100,6 +100,10 @@
     border: 3px dashed var(--light-grey) !important;
 }
 
+.header {
+    float: right;
+}
+
 .kanban_board_header_body {
     display: flex;
     justify-content: space-between;
@@ -133,6 +137,12 @@
 
 .task_link_title {
     cursor: pointer;
+}
+
+.not_selected_text {
+    color: crimson;
+    text-align: center;
+    margin-top: 10%;
 }
 
 .comment_section {

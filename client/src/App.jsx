@@ -10,6 +10,7 @@ import Projects from './pages/projects'
 import KanbanBoard from './pages/kanban-board'
 import ProjectDetails from './pages/projects/projectDetails'
 import CreateProject from './pages/projects/CreateProject'
+import CreateBoard from './pages/kanban-board/CreateBoard'
 import { decryptData } from './utils'
 
 // Private Routes
@@ -44,6 +45,7 @@ const App = () => {
       <Route path='/project/create' element={<AdminPrivateRoute><CreateProject /></AdminPrivateRoute>} />
       <Route path='/project/:id' element={<PrivateRoute><ProjectDetails /></PrivateRoute>} />
       <Route path='/kanban/board' element={<PrivateRoute><KanbanBoard /></PrivateRoute>} />
+      <Route path='/kanban/board/create/:projectId' element={<AdminPrivateRoute><CreateBoard /></AdminPrivateRoute>} />
     </Routes>
   )
 }

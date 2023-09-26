@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect, useState, useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Button } from 'reactstrap'
 
+import { AuthContext } from '../../context/AuthContextProvider'
 import DashboardWrapper from '../../components/wrapper'
 import { BOARD_DATA } from './mockData'
 import KanbanTasks from './KanbanTasks'
@@ -8,10 +10,13 @@ import KanbanModal from './KanbanModal'
 import KanbanHeader from './KanbanHeader'
 
 import styles from './kanban.module.css'
+import { ROLE_LIST } from '../../helpers/Constants'
 
 const KanbanBoard = () => {
 
   const location = useLocation()
+  const navigate = useNavigate()
+  const { state } = useContext(AuthContext)
 
   const [isOpenTaskModal, setIsOpenTaskModal] = useState(false)
   const [isNewTask, setIsNewTask] = useState(true)
@@ -45,8 +50,19 @@ const KanbanBoard = () => {
     }
   }, [])
 
+  const handleRedirectToCreateBoard = useCallback(() => {
+    if (project && project._id) {
+      navigate(`/kanban/board/create/${project._id}`)
+    }
+  }, [project])
+
   return (
     <DashboardWrapper>
+      {
+        state?.user?.role === ROLE_LIST.ADMIN && <div className={styles.header}>
+        <Button disabled={!project} color='primary' onClick={handleRedirectToCreateBoard}>Create Board</Button>
+      </div>
+      }
       <main className={styles.kanban_board}>
         <KanbanHeader 
           project={project}
@@ -54,7 +70,13 @@ const KanbanBoard = () => {
           onSetProject={handleSelectProject}
           onToggleTaskModal={handleToggleNewTask}
         />
-        <div className={styles.kanban_wrapper}>
+        {
+          !project && <div className={styles.not_selected_text}>
+            Please choose a project to load the board
+          </div> 
+        }
+        {
+          project && <div className={styles.kanban_wrapper}>
           {
             BOARD_DATA.map((column) => (
               <div className={styles.kanban_column} key={column.id}>
@@ -82,6 +104,7 @@ const KanbanBoard = () => {
           />
           }
         </div>
+        }
       </main>
     </DashboardWrapper>
   )
