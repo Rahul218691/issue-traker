@@ -1,6 +1,4 @@
 :root {
-    --bg:#ebf0f7;
-    --header:#fbf4f6;
     --text:#2e2e2f;
     --white:#ffffff;
     --light-grey:#c4cad3;
@@ -12,7 +10,6 @@
     --tag-3-text:#2d86ba;
     --tag-4:#f2dcf5;
     --tag-4-text:#a734ba;
-    --purple:#7784ee;
     --dark: #342E37;
   }
 
@@ -132,6 +129,10 @@
 .btn_right {
     margin-top: 5px;
     float: right;
+}
+
+.task_link_title {
+    cursor: pointer;
 }
 
 .comment_section {

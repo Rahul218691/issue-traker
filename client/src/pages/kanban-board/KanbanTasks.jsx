@@ -15,7 +15,7 @@ const KanbanTasks = ({
     }, [task, onSetSelectedTask])
 
     return (
-        <div className={styles.kanban_task} draggable onClick={handleSetSelectedTask}>
+        <div className={styles.kanban_task} draggable>
             <div className={styles.kanban_task_tags}>
                 {
                     task.tags.map((tag, index) => (
@@ -27,7 +27,7 @@ const KanbanTasks = ({
                     onSelect={() => { }}
                 />
             </div>
-            <p>{task.title}</p>
+            <p className={styles.task_link_title} onClick={handleSetSelectedTask}>{task.title}</p>
             <div className={styles.task_stats}>
                 <span><FaFlag />{task.created_at}</span>
                 <span><FaComment />{task.comments}</span>
