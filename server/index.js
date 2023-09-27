@@ -27,6 +27,7 @@ app.use('/api', require('./routes/userRoute'))
 app.use('/api', require('./routes/importRoute'))
 app.use('/api', require('./routes/projectRoute'))
 app.use('/api', require('./routes/noteRoute'))
+app.use('/api', require('./routes/boardRoutes'))
 
 const PORT = process.env.PORT || 5000
 

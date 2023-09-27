@@ -1,19 +1,24 @@
 import React, { useCallback, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Button } from 'reactstrap'
 import { FaTrash } from 'react-icons/fa6'
 import Skeleton from 'react-loading-skeleton'
 
+import useAxios from '../../hooks/useAxios'
 import BreadCrumbItem from '../../components/BreadCrumb'
 import DashboardWrapper from '../../components/wrapper'
 
 import { breadCrumConfig } from './config'
 import styles from './kanban.module.css'
 import InputField from '../../components/InputField'
+import { createBoardRequest } from '../../redux/actions/boardActions'
 
 const CreateBoard = () => {
 
     const { projectId } = useParams()
+    const api = useAxios()
+    const dispatch = useDispatch()
 
     const dragItem = useRef()
     const dragOverItem = useRef()
@@ -56,8 +61,18 @@ const CreateBoard = () => {
     }, [columns])
 
     const handleSaveBoard = useCallback(() => {
-
-    }, [])
+      const payload = {
+        instance: api,
+        data: {
+          projectId,
+          columns
+        }
+      }
+      dispatch(createBoardRequest(payload, () => {
+        // TODO
+        // setColumns([])
+      }))
+    }, [api, columns])
 
   return (
     <DashboardWrapper>
