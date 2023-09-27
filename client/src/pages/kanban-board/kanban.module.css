@@ -23,6 +23,16 @@
     margin-bottom: 10px;
 }
 
+.deleteColumn {
+    cursor: pointer;
+    color: crimson;
+}
+
+.board_save {
+    float: right;
+    margin-bottom: 5px;
+}
+
 .kanban_wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
