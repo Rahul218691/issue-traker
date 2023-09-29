@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const { protect, adminRoute } = require('../middlewares/auth')
-const { createBoard } = require('../controllers/boardController.js')
+const { createBoard, getProjectBoard } = require('../controllers/boardController.js')
+
+router.get('/board/:projectId', getProjectBoard)
 
 router.post('/create/board', protect, adminRoute, createBoard)
 

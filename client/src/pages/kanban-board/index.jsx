@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Button } from 'reactstrap'
 
+import useAxios from '../../hooks/useAxios'
 import { AuthContext } from '../../context/AuthContextProvider'
 import DashboardWrapper from '../../components/wrapper'
 import { BOARD_DATA } from './mockData'
@@ -11,17 +13,21 @@ import KanbanHeader from './KanbanHeader'
 
 import styles from './kanban.module.css'
 import { ROLE_LIST } from '../../helpers/Constants'
+import { getProjectBoardRequest } from '../../redux/actions/boardActions'
 
 const KanbanBoard = () => {
 
   const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { state } = useContext(AuthContext)
+  const api = useAxios()
 
   const [isOpenTaskModal, setIsOpenTaskModal] = useState(false)
   const [isNewTask, setIsNewTask] = useState(true)
   const [selectedTask, setSelectedTask] = useState(null)
   const [project, setProject] = useState(null)
+  const [boardData, setBoardData] = useState([])
 
   const handleSelectTask = useCallback((task) => {
     setIsOpenTaskModal(true)
@@ -40,6 +46,20 @@ const KanbanBoard = () => {
     setIsOpenTaskModal(true)
   }, [])
 
+  const handleFetchProjectBoard = useCallback(() => {
+    if (project) {
+      const payload = {
+        instance: api,
+        id: project._id
+      }
+      dispatch(getProjectBoardRequest(payload, (res) => {
+        if (res) {
+          setBoardData(res.columns)
+        }
+      }))
+    }
+  }, [project, api])
+
   const handleSelectProject = useCallback((e, id, selected) => {
     setProject(selected)
   }, [])
@@ -49,6 +69,12 @@ const KanbanBoard = () => {
       setProject(location.state.project)
     }
   }, [])
+
+  useEffect(() => {
+    if (project) {
+      handleFetchProjectBoard()
+    }
+  }, [project])
 
   const handleRedirectToCreateBoard = useCallback(() => {
     if (project && project._id) {
@@ -78,8 +104,8 @@ const KanbanBoard = () => {
         {
           project && <div className={styles.kanban_wrapper}>
           {
-            BOARD_DATA.map((column) => (
-              <div className={styles.kanban_column} key={column.id}>
+            !!boardData?.length && boardData.map((column) => (
+              <div className={styles.kanban_column} key={column._id}>
                 <div className={styles.kanban_column_heading}>
                   <h2 className={styles.kanban_column_heading_title}>{column.title}</h2>
                 </div>

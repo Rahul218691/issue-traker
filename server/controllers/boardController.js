@@ -1,4 +1,4 @@
-const { createNewBoard } = require("../dbServices/boardService");
+const { createNewBoard, getBoardData } = require("../dbServices/boardService");
 
 const createBoard = async(req, res) => {
     try {
@@ -11,6 +11,20 @@ const createBoard = async(req, res) => {
     }
 }
 
+const getProjectBoard = async(req, res) => {
+    try {
+        const { projectId } = req.params
+        const board = await getBoardData(projectId)
+        const response = {
+            data: board.length ? board[0] : {}
+        }
+        res.json(response)
+    } catch (error) {
+        return res.status(500).json({msg:error.message});
+    }
+}
+
 module.exports = {
-    createBoard
+    createBoard,
+    getProjectBoard
 }

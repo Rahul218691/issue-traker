@@ -59,5 +59,57 @@ export const BOARD_DATA = [
                 tags: ['Copyright']
             }
         ]
+    },
+    {
+        id: randomNumber(),
+        title: 'Completed In Dev',
+        tasks: [
+            {
+                id: randomNumber(),
+                title: 'Konsep hero title yang menarik',
+                created_at: 'Nov 23',
+                comments: 5,
+                tags: ['Copyright']
+            }
+        ]
+    },
+    {
+        id: randomNumber(),
+        title: 'Demo',
+        tasks: [
+            {
+                id: randomNumber(),
+                title: 'Konsep hero title yang menarik',
+                created_at: 'Nov 23',
+                comments: 5,
+                tags: ['Copyright']
+            }
+        ]
+    },
+    {
+        id: randomNumber(),
+        title: 'Prod',
+        tasks: [
+            {
+                id: randomNumber(),
+                title: 'Konsep hero title yang menarik',
+                created_at: 'Nov 23',
+                comments: 5,
+                tags: ['Copyright']
+            }
+        ]
+    },
+    {
+        id: randomNumber(),
+        title: 'Testing',
+        tasks: [
+            {
+                id: randomNumber(),
+                title: 'Konsep hero title yang menarik',
+                created_at: 'Nov 23',
+                comments: 5,
+                tags: ['Copyright']
+            }
+        ]
     }
 ]
